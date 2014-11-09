@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>테스트</title>
+  <link href="http://cdn.bootcss.com/bootstrap/2.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/stylesheets/sqy.css" rel="stylesheet"/>
+</head>
+<body>
+  <div class="container">
+    <h1 class="clearfix"><span class="pull-left">테스트한</span><input type="button" class="btn btn-success pull-right" value="완성 대답하다" id="saveTest" /></h1>
+    <div class="alert alert-info">
+      <h4>주의사항：</h4>
+      <p></p>
+      <p>15분 뒤에 자동적으로 문제2로 넘어갑니다.문제1에서 입력한 내용이 자동적으로 저장됩니다.</p>
+    </div>
+    <div class="test row">
+      <div class="span6 question">
+        <div class="backup" id="acBak1">
+          <input class="btn btn-success" id="acBtn1" type="button" value="문제1"/>
+        </div>
+        <div class="alarm alert" id="alarmClock1"><i class="icon-time"></i> 15:00</div>
+        <p>
+          <i class="icon-file"></i>
+          문제1：최근에는 사람들은 카메라보다는,
+           사진이나 비디오를 더 빨리 찍을 수 있는 휴대폰을 더 즐겨 사용한다.
+            디지털 카메라 업계 사람들이라면 누구나 다 시장의 변화를 체감할 정도이다.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            만약 당신이 카메라 디자이너 혹은 제작자라면, 어떤 디지털카메라나 기기를 만들어서 이 시장을 살릴 수 있을 것인가?
+         </p>
+        <form id="form1">
+          <textarea class="span6" rows="15" name="content"></textarea>
+          <input type="hidden" name="question" value="1"/>
+          <input type="hidden" name="user_id" value="<%= user_id %>"/>
+          <input type="hidden" name="type" value="<%= type %>"/>
+        </form>
+      </div>
+      <div class="span6 question">
+        <div class="backup pending" id="acBak2">
+          <input class="btn btn-success" id="acBtn2" type="button" value="문제2"/>
+        </div>
+        <div class="alarm alert" id="alarmClock2"><i class="icon-time"></i> 15:00</div>
+        <p>
+          <i class="icon-file"></i>
+          문제2：예전과 달리, 점점 더 많은 사람들이 직장 밖에서도 많은 지식을 습득하고 싶어 한다.
+          그런데 직장인들은 일도 많고, 공부하는 시간과 장소도 많은 제한을 받고 있다.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          만약, 당신이 직장인 학습자들을 위한 방법을 찾는다면, 어떤 방법으로 직장인들이 더 쉽고 오래 공부하도록 도울 수 잇습니까?
+        </p>
+        <form id="form2">
+          <textarea class="span6" rows="15" name="content"></textarea>
+          <input type="hidden" name="question" value="2"/>
+          <input type="hidden" name="user_id" value="<%= user_id %>"/>
+          <input type="hidden" name="type" value="<%= type %>"/>
+        </form>
+      </div>
+    </div>
+  </div>
+<script type="text/javascript" src="http://cdn.bootcss.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://cdn.bootcss.com/bootstrap/2.3.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/javascripts/test1.js"></script>
+</body>
+</html>
