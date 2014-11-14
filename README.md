@@ -19,8 +19,8 @@
 * 当时在vps上启动完数据库服务和node服务之后，就关闭了终端，过了一段时间发现访问不了了，这才知道这世上还有一个命令叫`nohup`
 
 ```shell
-[root@x mongodb]# nohup ./mongod &
-[root@x sqy]# nohup node app &
+# nohup ./mongod &
+# nohup node app &
 ```
 好了，这下没问题了，但是下次有需求改动，或者需要停服务的时候不知道怎么弄了，linux菜鸟的我至少求助网络资源---`kill`
 ```shell
