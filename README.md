@@ -23,7 +23,7 @@
 [root@x sqy]# nohup node app &
 ```
 好了，这下没问题了，但是下次有需求改动，或者需要停服务的时候不知道怎么弄了，linux菜鸟的我至少求助网络资源---`kill`
-```
+```shell
 # ps -ef | grep node
 # kill -9 xxxxx
 ```
