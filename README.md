@@ -34,13 +34,16 @@
 ### 放几张截图
 
 * 开始界面
-![开始界面](welcome.png =500x)
+
+<img src="welcome.png" alt="开始界面" width="500px" />
 
 * 实验一
-![实验一](test1.png =500x)
+
+<img src="test1.png" alt="实验一" width="500px" />
 
 * 实验二
-![实验二](test2.png =500x)
+
+<img src="test2.png" alt="实验二" width="500px" />
 
 ----------------------
 2014.11.14
