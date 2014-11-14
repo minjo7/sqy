@@ -6,6 +6,8 @@ var SQY = new Schema({
   type: String,
   question: String,
   content: String,
+  contTime: String,
+  editTimes: String,
   updated_at : Date
 });
 

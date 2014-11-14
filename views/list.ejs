@@ -29,6 +29,8 @@
           <th>方式</th>
           <th>问题</th>
           <th>测试人员</th>
+          <th>次数</th>
+          <th>时间表</th>
           <th>测试答案</th>
         </tr>
       </thead>
@@ -39,6 +41,8 @@
             <td><%= q.type %></td>
             <td><%= q.question %></td>
             <td><%= q.user_id %></td>
+            <td><%= q.editTimes %></td>
+            <td><%= q.contTime %></td>
             <td><textarea class="span6"><%= q.content%></textarea></td>
           </tr>
       <% }); %>

@@ -37,6 +37,8 @@ exports.save = function (req, res, next) {
     if (sqy.length > 0) { // update
       sqy = sqy[0];
       sqy.content = req.body.content;
+      sqy.contTime = req.body.contTime;
+      sqy.editTimes = req.body.editTimes;
       sqy.updated_at = Date.now();
     } else {
       sqy = new SQY({
@@ -44,9 +46,12 @@ exports.save = function (req, res, next) {
         type: req.body.type,
         question: req.body.question,
         content: req.body.content,
+        contTime: req.body.contTime,
+        editTimes: req.body.editTimes,
         updated_at : Date.now()
       });
     }
+
     sqy.save( function ( err ){
       if(!err){
         res.send('{success:true}');
