@@ -10,3 +10,5 @@
 ### 我的话
 
 第一次使用nodejs写项目，外加搭建vps，不熟。主要依赖网上的教程资源[用 Express 和 MongoDB 寫一個 todo list](http://dreamerslab.com/blog/tw/write-a-todo-list-with-express-and-mongodb/)
+
+系统最后的样子跟这里的代码不一样，根据『项目经理/产品经理』（同学）的不断需求变更，在vps上直接修改，卡死。学了不少linux命令。事实证明，不断改需求不是产品经理的特有技能，任何人身体里都潜藏着，她还怪我被我的处女座特征传染了。。。
