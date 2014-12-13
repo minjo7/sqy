@@ -1,7 +1,3 @@
-/**
- * Module dependencies.
- */
-
 // mongoose setup
 require( './db' );
 
@@ -20,9 +16,8 @@ var static         = require( 'serve-static' );
 var app    = express();
 var routes = require( './routes' );
 
-
 // all environments
-app.set( 'port', process.env.PORT || 3001 );
+app.set( 'port', process.env.PORT || 3000 );
 app.engine( 'ejs', engine );
 app.set( 'views', path.join( __dirname, 'views' ));
 app.set( 'view engine', 'ejs' );
@@ -34,13 +29,17 @@ app.use( bodyParser.json());
 app.use( bodyParser.urlencoded({ extended : true }));
 
 // Routes
-app.get(  '/', routes.index );
-app.get(  '/thanks', routes.thanks );
-app.get(  '/list', routes.list );
-app.get(  '/test1', routes.test1 );
-app.get(  '/test2', routes.test2 );
-app.post( '/save', routes.save);
-app.use( static( path.join( __dirname, 'public' )));
+app.get('/', routes.index1);
+app.get('/tom', routes.index1);
+app.get('/jerry', routes.index2);
+app.get('/thanks/:num', routes.thanks);
+app.get('/tom/list', routes.list1);
+app.get('/jerry/list', routes.list2);
+app.get('/tom/test', routes.test1);
+app.get('/jerry/test', routes.test2);
+app.post('/save1', routes.save1);
+app.post('/save2', routes.save2);
+app.use(static( path.join( __dirname, 'public' )));
 
 // development only
 if( 'development' == app.get( 'env' )){

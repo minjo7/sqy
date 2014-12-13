@@ -2,51 +2,53 @@
 <html>
 <head lang="en">
   <meta charset="UTF-8">
-  <title>欢迎进行测试</title>
+  <title>Answer Result</title>
   <link href="http://cdn.bootcss.com/bootstrap/2.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <style type="text/css">
+    body {
+      font-family: "맑은 고딕", Arial;
+      -webkit-font-smoothing: antialiased;
+    }
+    .table thead th {
+      white-space: nowrap;
+      background: #f0f0f0;
+    }
+    textarea {
+      overflow: auto;
+      resize: none;
+    }
+  </style>
 </head>
 <body>
-    <h4>答卷结果</h4>
-    <form class="form-inline" action="/list" method="get">
-      <label for="type">测试方式</label>
-      <select name="type" class="span2">
-        <option value=""></option>
-        <option value="1">测试一</option>
-        <option value="2">测试二</option>
-      </select>
-      <label for="type">测试问题</label>
-      <select name="question" class="span2">
-        <option value=""></option>
-        <option value="1">问题一</option>
-        <option value="1">问题二</option>
-      </select>
-      <input type="submit" class="btn" value="查询"/>
-    </form>
-    <table class="table table-condensed table-hover table-bordered">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>方式</th>
-          <th>问题</th>
-          <th>测试人员</th>
-          <th>次数</th>
-          <th>时间表</th>
-          <th>测试答案</th>
-        </tr>
-      </thead>
-      <tbody>
-      <% list.forEach( function ( q, i ){ %>
-          <tr>
-            <td><%=i+1%></td>
-            <td><%= q.type %></td>
-            <td><%= q.question %></td>
-            <td><%= q.user_id %></td>
-            <td><%= q.editTimes %></td>
-            <td><%= q.contTime %></td>
-            <td><textarea class="span6"><%= q.content%></textarea></td>
-          </tr>
-      <% }); %>
-      </tbody>
-    </table>
+<div class="container">
+  <h2 class="text-center">Answer Result</h2>
+  <table class="table table-condensed table-hover table-bordered">
+    <thead>
+    <tr>
+      <th class="span1">User Id</th>
+      <th class="span2">No</th>
+      <th class="span1">Edit Times</th>
+      <th>Edit Record</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% list.forEach( function ( q, i ){ %>
+    <tr>
+      <td><%= q.user_id %></td>
+      <td>Question <%= q.question %></td>
+      <td><%= q.editTimes %></td>
+      <td><%= q.contTime.split(',').join(' -- ') %></td>
+    </tr>
+    <tr>
+      <td>User Answer</td>
+      <td colspan="3"><textarea class="span9" rows="4"><%= q.content%></textarea></td>
+    </tr>
+    <tr class="info">
+      <td colspan="4"></td>
+    </tr>
+    <% }); %>
+    </tbody>
+  </table>
+</div>
 </body>
 </html>

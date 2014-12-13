@@ -1,8 +1,5 @@
-/**
- * Created by hjxenjoy on 14/11/8.
- */
 $(function() {
-  var TIMES = 899;
+  var TIMES = 539;
   var alarm1, alarm2;
   var t1 = TIMES, t2 = TIMES;
   var ac1 = $('#alarmClock1');
@@ -30,24 +27,23 @@ $(function() {
 
   var form1 = $('#form1');
   var form2 = $('#form2');
+  var num = form1.find('[name="user_id"]').val();
   $('#saveTest').on('click', function () {
     completeEdit();
   });
   function completeEdit() {
-    time1.push('close: ' + toMi(t1)); 
-    time2.push('close: ' + toMi(t2)); 
-    $t1.val(time1.join(',')); 
-    $t2.val(time2.join(',')); 
+    $t1.val(time1.join(','));
+    $t2.val(time2.join(','));
     count1.val(c1);
     count2.val(c2);
-    $.when($.post('/save', form1.serializeArray()), $.post('/save', form2.serializeArray()))
+    $.when($.post('/save2', form1.serializeArray()), $.post('/save2', form2.serializeArray()))
       .done(function () {
-        location.replace('/thanks');
+        location.replace('/thanks/' + num);
       });
   }
 
   function saveForm(form) {
-    $.post('/save', form.serializeArray());
+    $.post('/save2', form.serializeArray());
   }
 
   function toMi(se) {
@@ -65,7 +61,6 @@ $(function() {
       return '0:' + se;
     }
   }
-
   function closeAC1() {
     time1.push('close: ' + toMi(t1));
     window.clearInterval(alarm1);
@@ -86,7 +81,11 @@ $(function() {
           ac1.addClass('alert-error');
         }
       } else {
+        form1.find('textarea').attr('readonly', 'readonly');
         closeAC1();
+        if (t2 === 0) {
+          completeEdit();
+        }
       }
     }, 1000);
   }
@@ -107,11 +106,15 @@ $(function() {
       if (t2 > 0) {
         ac2.html('<i class="icon-time"></i> ' + toMi(t2));
         t2 -= 1;
-        if (t2 === 180) {
+        if (t2 < 180) {
           ac2.addClass('alert-error');
         }
       } else {
+        form2.find('textarea').attr('readonly', 'readonly');
         closeAC2();
+        if (t1 === 0) {
+          completeEdit();
+        }
       }
     }, 1000);
   }

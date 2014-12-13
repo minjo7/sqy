@@ -4,6 +4,20 @@ module.exports = {
     return Math.floor( Math.random() * ( max - min + 1 )) + min;
   },
 
+  formatDate: function () {
+    var d = new Date();
+    var year = d.getFullYear() + '';
+    var month = d.getMonth() + 1;
+    var date = d.getDate();
+    if (month < 10) {
+      month = '0' + month;
+    }
+    if (date < 10) {
+      date = '0' + date;
+    }
+    return year + month + date;
+  },
+
   uid : function ( len ){
     var str     = '';
     var src     = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
