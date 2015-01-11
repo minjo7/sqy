@@ -81,23 +81,47 @@ exports.save1 = function (req, res, next) {
   });
 };
 
+function toMi(se) {
+  if (se >= 60) {
+    var m = Math.floor(se / 60);
+    var s = se % 60;
+    if (s<10) {
+      s = '0' + s;
+    }
+    return m + ':' + s;
+  } else {
+    if (se < 10) {
+      se = '0' + se;
+    }
+    return '0:' + se;
+  }
+}
 exports.save2 = function (req, res, next) {
   HJX.find({user_id: req.body.user_id, question: req.body.question, type: req.body.type}, function (err, sqy) {
+
+    var contTime = (req.body.contTime || '').split(',');
+    var contTable = [];
+    var editTimes = contTime.length;
+
+    contTime.forEach(function (time) {
+      contTable.push('<span class="label">open@'+toMi(time)+'</span>');
+    });
+
     if (sqy.length > 0) { // update
       sqy = sqy[0];
       sqy.content = req.body.content;
-      sqy.contTime = req.body.contTime;
-      sqy.contTable = req.body.contTable || '';
-      sqy.editTimes = req.body.editTimes;
+      sqy.contTime = contTime;
+      sqy.contTable = contTable.join('');
+      sqy.editTimes = editTimes;
     } else {
       sqy = new HJX({
         user_id: req.body.user_id,
         type: req.body.type,
         question: req.body.question,
         content: req.body.content,
-        contTime: req.body.contTime,
-        contTable: req.body.contTable || '',
-        editTimes: req.body.editTimes,
+        contTime: contTime,
+        contTable: contTable.join(''),
+        editTimes: editTimes,
         updated_at : Date.now()
       });
     }

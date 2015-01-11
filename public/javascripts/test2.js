@@ -32,14 +32,6 @@ $(function() {
     $t2.val(time2.join(','));
     var param1 = form1.serializeArray();
     var param2 = form2.serializeArray();
-    param1.push({
-      name: 'editTimes',
-      value: time1.length
-    });
-    param2.push({
-      name: 'editTimes',
-      value: time2.length
-    });
     $.when($.post('/save2', param1), $.post('/save2', param2))
       .done(function () {
         location.replace('/thanks/' + num);
@@ -84,6 +76,7 @@ $(function() {
           ac1.addClass('alert-error');
         }
       } else {
+        acBtn1.remove();
         form1.find('textarea').attr('readonly', 'readonly');
         closeAC1();
         if (t2 === 0) {
@@ -115,6 +108,7 @@ $(function() {
           ac2.addClass('alert-error');
         }
       } else {
+        acBtn2.remove();
         form2.find('textarea').attr('readonly', 'readonly');
         closeAC2();
         if (t1 === 0) {
