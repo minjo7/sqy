@@ -1,5 +1,5 @@
 $(function() {
-  var TIMES = 19;
+  var TIMES = 539;
   var alarm1, alarm2;
   var t1 = TIMES, t2 = TIMES;
   var ac1 = $('#alarmClock1');
