@@ -101,6 +101,7 @@ exports.save2 = function (req, res, next) {
         updated_at : Date.now()
       });
     }
+    console.log(sqy.contTime);
     sqy.save( function ( err ){
       if(!err){
         res.send('{success:true}');

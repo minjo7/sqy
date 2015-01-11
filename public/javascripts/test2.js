@@ -1,5 +1,5 @@
 $(function() {
-  var TIMES = 539;
+  var TIMES = 19;
   var alarm1, alarm2;
   var t1 = TIMES, t2 = TIMES;
   var ac1 = $('#alarmClock1');
@@ -28,10 +28,10 @@ $(function() {
   var num = form1.find('[name="user_id"]').val();
 
   function completeEdit() {
-    var param1 = form1.serializeArray();
-    var param2 = form2.serializeArray();
     $t1.val(time1.join(','));
     $t2.val(time2.join(','));
+    var param1 = form1.serializeArray();
+    var param2 = form2.serializeArray();
     param1.push({
       name: 'editTimes',
       value: time1.length
