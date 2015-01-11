@@ -37,7 +37,11 @@
       <td><%= q.user_id %></td>
       <td>Question <%= q.question %></td>
       <td><%= q.editTimes %></td>
-      <td><%= q.contTable %></td>
+      <td>
+        <% q.contTable.split(',').forEach(function (time) { %>
+          <span class="label"><%= time %></span>
+        <% }); %>
+      </td>
     </tr>
     <tr>
       <td>User Answer</td>

@@ -104,14 +104,14 @@ exports.save2 = function (req, res, next) {
     var editTimes = contTime.length;
 
     contTime.forEach(function (time) {
-      contTable.push('<span class="label">open@'+toMi(time)+'</span>');
+      contTable.push('open@'+toMi(time));
     });
 
     if (sqy.length > 0) { // update
       sqy = sqy[0];
       sqy.content = req.body.content;
       sqy.contTime = contTime;
-      sqy.contTable = contTable.join('');
+      sqy.contTable = contTable.join(',');
       sqy.editTimes = editTimes;
     } else {
       sqy = new HJX({
@@ -120,12 +120,11 @@ exports.save2 = function (req, res, next) {
         question: req.body.question,
         content: req.body.content,
         contTime: contTime,
-        contTable: contTable.join(''),
+        contTable: contTable.join(','),
         editTimes: editTimes,
         updated_at : Date.now()
       });
     }
-    console.log(sqy.contTable);
     sqy.save( function ( err ){
       if(!err){
         res.send('{success:true}');
