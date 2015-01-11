@@ -10,12 +10,10 @@ $(function() {
   var acBtn2 = $('#acBtn2');
   var $t1 = $('#contTime1');
   var $t2 = $('#contTime2');
-  var count1 = $('#editTimes1');
-  var count2 = $('#editTimes2');
-  var c1 = 0;
-  var c2 = 0;
   var time1 = [];
   var time2 = [];
+  var state1 = false;
+  var state2 = false;
 
   acBtn1.on('click', function () {
     startAC1();
@@ -28,25 +26,28 @@ $(function() {
   var form1 = $('#form1');
   var form2 = $('#form2');
   var num = form1.find('[name="user_id"]').val();
-  $('#saveTest').on('click', function () {
-    completeEdit();
-  });
+
   function completeEdit() {
+    var param1 = form1.serializeArray();
+    var param2 = form2.serializeArray();
     $t1.val(time1.join(','));
     $t2.val(time2.join(','));
-    count1.val(c1);
-    count2.val(c2);
-    $.when($.post('/save2', form1.serializeArray()), $.post('/save2', form2.serializeArray()))
+    param1.push({
+      name: 'editTimes',
+      value: time1.length
+    });
+    param2.push({
+      name: 'editTimes',
+      value: time2.length
+    });
+    $.when($.post('/save2', param1), $.post('/save2', param2))
       .done(function () {
         location.replace('/thanks/' + num);
       });
   }
 
-  function saveForm(form) {
-    $.post('/save2', form.serializeArray());
-  }
-
   function toMi(se) {
+    // 大于一分钟
     if (se >= 60) {
       var m = Math.floor(se / 60);
       var s = se % 60;
@@ -56,21 +57,23 @@ $(function() {
       return m + ':' + s;
     } else {
       if (se < 10) {
-        s = ''
+        se = '0' + se;
       }
       return '0:' + se;
     }
   }
   function closeAC1() {
-    time1.push('close: ' + toMi(t1));
+    if (!state1) {
+      return;
+    }
+    state1 = false;
     window.clearInterval(alarm1);
     acBak1.slideDown();
-    saveForm(form1);
   }
 
   function startAC1() {
-    c1 += 1;
-    time1.push('open: ' + toMi(t1));
+    state1 = true;
+    time1.push(t1);
     closeAC2();
     acBak1.slideUp();
     alarm1 = window.setInterval(function () {
@@ -91,15 +94,17 @@ $(function() {
   }
 
   function closeAC2() {
-    time2.push('close: ' + toMi(t2));
+    if (!state2) {
+      return;
+    }
+    state2 = false;
     window.clearInterval(alarm2);
     acBak2.slideDown();
-    saveForm(form2);
   }
 
   function startAC2() {
-    c2 += 1;
-    time2.push('open: ' + toMi(t2));
+    state2 = true;
+    time2.push(t2);
     closeAC1();
     acBak2.slideUp();
     alarm2 = window.setInterval(function () {

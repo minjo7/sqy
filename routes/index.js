@@ -1,10 +1,10 @@
 var utils    = require( '../utils' );
 var mongoose = require( 'mongoose' );
-var SQY      = mongoose.model( 'SQY' );
+var HJX = mongoose.model( 'HJX' );
 
 var cur = utils.formatDate();
-var ran1 = ('10' + cur + '0000') * 1;
-var ran2 = ('20' + cur + '0000') * 1;
+var ran1 = ('10' + cur + '0000') - 0;
+var ran2 = ('20' + cur + '0000') - 0;
 
 exports.index1 = function ( req, res, next ){
   res.render( 'index1' );
@@ -19,7 +19,7 @@ exports.thanks = function ( req, res, next ){
 };
 
 exports.list1 = function ( req, res, next ){
-  SQY.find({type:'1'}).sort( '-updated_at' ).exec( function ( err, list ){
+  HJX.find({type:'1'}).sort( '-updated_at' ).exec( function ( err, list ){
     if( err ) return next( err );
     res.render( 'list', {
       title : 'Test Result',
@@ -29,7 +29,7 @@ exports.list1 = function ( req, res, next ){
 };
 
 exports.list2 = function ( req, res, next ){
-  SQY.find({type:'2'}).sort( '-user_id' ).exec( function ( err, list ){
+  HJX.find({type:'2'}).sort( '-user_id' ).exec( function ( err, list ){
     if( err ) return next( err );
     res.render( 'list', {
       title : 'Test Result',
@@ -55,17 +55,18 @@ exports.test2 = function (req, res, next) {
 };
 
 exports.save1 = function (req, res, next) {
-  SQY.find({user_id: req.body.user_id, question: req.body.question, type: req.body.type}, function (err, sqy) {
+  HJX.find({user_id: req.body.user_id, question: req.body.question, type: req.body.type}, function (err, sqy) {
     if (sqy.length > 0) { // update
       sqy = sqy[0];
       sqy.content = req.body.content;
     } else {
-      sqy = new SQY({
+      sqy = new HJX({
         user_id: req.body.user_id,
         type: req.body.type,
         question: req.body.question,
         content: req.body.content,
         contTime: '',
+        contTable: '',
         editTimes: '',
         updated_at : Date.now()
       });
@@ -81,19 +82,21 @@ exports.save1 = function (req, res, next) {
 };
 
 exports.save2 = function (req, res, next) {
-  SQY.find({user_id: req.body.user_id, question: req.body.question, type: req.body.type}, function (err, sqy) {
+  HJX.find({user_id: req.body.user_id, question: req.body.question, type: req.body.type}, function (err, sqy) {
     if (sqy.length > 0) { // update
       sqy = sqy[0];
       sqy.content = req.body.content;
       sqy.contTime = req.body.contTime;
+      sqy.contTable = req.body.contTable || '';
       sqy.editTimes = req.body.editTimes;
     } else {
-      sqy = new SQY({
+      sqy = new HJX({
         user_id: req.body.user_id,
         type: req.body.type,
         question: req.body.question,
         content: req.body.content,
         contTime: req.body.contTime,
+        contTable: req.body.contTable || '',
         editTimes: req.body.editTimes,
         updated_at : Date.now()
       });
