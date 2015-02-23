@@ -70,7 +70,7 @@ $(function() {
     acBak1.slideUp();
     alarm1 = window.setInterval(function () {
       if (t1 > 0) {
-        ac1.html('<i class="icon-time"></i> ' + toMi(t1));
+        ac1.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t1));
         t1 -= 1;
         if (t1 < 180) {
           ac1.addClass('alert-error');

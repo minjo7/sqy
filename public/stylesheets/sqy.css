@@ -46,3 +46,14 @@ h4 {
 .pending .alert {
   display: none;
 }
+.backup {
+  z-index: 9;
+}
+table {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+td, th {
+  border: 1px solid gray;
+  padding: 5px;
+}
