@@ -60,3 +60,6 @@ td, th {
 form {
   margin-top: 10px;
 }
+legend {
+  font-size: 36px;
+}
