@@ -49,17 +49,17 @@ h4 {
 .backup {
   z-index: 9;
 }
-table {
+table.stimuli {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-td, th {
+table.stimuli td, table.stimuli th {
   border: 1px solid gray;
   padding: 5px;
 }
-form {
+form.settings {
   margin-top: 10px;
 }
-legend {
+form.settings legend {
   font-size: 36px;
 }

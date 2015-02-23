@@ -102,7 +102,7 @@ $(function() {
     acBak2.slideUp();
     alarm2 = window.setInterval(function () {
       if (t2 > 0) {
-        ac2.html('<i class="icon-time"></i> ' + toMi(t2));
+        ac2.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t2));
         t2 -= 1;
         if (t2 < 180) {
           ac2.addClass('alert-error');
