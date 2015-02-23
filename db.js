@@ -9,8 +9,17 @@ var HJX = new Schema({
   contTime: String,
   contTable: String,
   editTimes: String,
-  updated_at : Date
+  updated_at: Date
+});
+
+var Settings = new Schema({
+  numParticipants: Number,
+  numStimuli: Number,
+  timeset: Number,
+  updated_at: Date
 });
 
 mongoose.model( 'HJX', HJX);
+mongoose.model( 'Settings', Settings);
+
 mongoose.connect( 'mongodb://localhost/hjx' );

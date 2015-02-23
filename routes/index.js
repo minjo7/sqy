@@ -1,6 +1,8 @@
 var utils    = require( '../utils' );
+var cmd      = require( '../cmd' );
 var mongoose = require( 'mongoose' );
 var HJX = mongoose.model( 'HJX' );
+var Settings = mongoose.model( 'Settings' );
 
 var cur = utils.formatDate();
 var ran1 = ('10' + cur + '0000') - 0;
@@ -54,6 +56,34 @@ exports.test2 = function (req, res, next) {
   });
 };
 
+exports.settings = function (req, res, next) {
+  Settings.find()
+          .sort( '-updated_at' )
+          .exec(function (err, settings) {
+    if (err) return handleError(err);
+    else if (settings.length > 0) {
+      settings = settings[0];
+      res.render( 'settings', {
+        numParticipants: settings.numParticipants,
+        numStimuli: settings.numStimuli,
+        timeset: settings.timeset
+      });
+    } else {
+      res.render( 'settings' );
+    }
+  });
+}
+
+exports.update = function (req, res, next) {
+  switch (req.body.cmd) {
+    case 'update_settings':
+      cmd.update_settings(req, res, next);
+      break;
+    default: 
+      res.send('{success: false}');
+  }
+}
+
 exports.save1 = function (req, res, next) {
   HJX.find({user_id: req.body.user_id, question: req.body.question, type: req.body.type}, function (err, sqy) {
     if (sqy.length > 0) { // update
@@ -73,9 +103,9 @@ exports.save1 = function (req, res, next) {
     }
     sqy.save( function ( err ){
       if(!err){
-        res.send('{success:true}');
+        res.send('{success: true}');
       }else{
-        res.send('{success:false}');
+        res.send('{success: false}');
       }
     });
   });

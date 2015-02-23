@@ -37,6 +37,8 @@ app.get('/tom/list', routes.list1);
 app.get('/jerry/list', routes.list2);
 app.get('/tom/test', routes.test1);
 app.get('/jerry/test', routes.test2);
+app.get('/settings', routes.settings);
+app.post('/update', routes.update);
 app.post('/save1', routes.save1);
 app.post('/save2', routes.save2);
 app.use(static( path.join( __dirname, 'public' )));
