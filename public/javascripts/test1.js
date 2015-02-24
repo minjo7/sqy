@@ -1,5 +1,5 @@
 $(function() {
-  var TIMES = 539;
+  var TIMES = 4;
   var alarm1, alarm2;
   var t1 = TIMES, t2 = TIMES;
   var ac1 = $('#alarmClock1');
@@ -8,6 +8,23 @@ $(function() {
   var acBak2 = $('#acBak2');
   var acBtn1 = $('#acBtn1');
   var acBtn2 = $('#acBtn2');
+  var btnSwitch = $('#btnSwitch');
+  var btnNext = $('#btnNext');
+
+  btnSwitch.on('click', function () {
+    switch (parseInt(btnSwitch.attr('status'))) {
+      case 0:
+        startAC1();
+        btnSwitch.addClass('disabled');
+        btnSwitch.attr('status', 1);
+        break;
+      case 1:
+        startAC2();
+        btnSwitch.addClass('disabled');
+        btnSwitch.attr('status', 2);
+        break;
+    } 
+  });
 
   acBtn1.on('click', function () {
     startAC1();
@@ -72,6 +89,7 @@ $(function() {
         }
       } else {
         closeAC1();
+        btnSwitch.removeClass('disabled');
       }
     }, 1000);
   }
@@ -97,6 +115,7 @@ $(function() {
         }
       } else {
         closeAC2(true);
+        btnNext.removeClass('disabled');
       }
     }, 1000);
   }

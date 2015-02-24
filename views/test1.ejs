@@ -6,9 +6,23 @@
   <link href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
   <link href="/stylesheets/sqy.css" rel="stylesheet"/>
 </head>
-<body>
+<body class="has-navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header col-sm-2">
+      <a class="navbar-brand" href="#">THEMIS</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-nav-switch col-sm-8">
+        <li class="col-sm-12"><a id="btnSwitch" status="0" class="text-center" href="#">풀이 시작</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-nav-next col-sm-2">
+        <li class="col-sm-12"><a id="btnNext" class="text-center" href="./next">다음 문제</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
 <div class="container">
-  <br />
   <div class="alert alert-info">
     <h4>주의사항：</h4>
     <p></p>

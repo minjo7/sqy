@@ -1,10 +1,64 @@
 @charset "utf-8";
 
-body, input, select, textarea, button {
-  font-family: "맑은 고딕";
-  -webkit-font-smoothing: antialiased;
+.navbar-brand:hover, 
+.navbar-brand, 
+.navbar-brand:active, 
+.navbar-brand:visited {
+  font-weight: 500;
+  font-family: "Times";
+  font-size: 22px;
+  line-height: 22px;
+  letter-spacing: 4px;
+}
+.navbar-nav-next:hover {
+  border-left: 0;
+  background: white;
+}
+.navbar-nav-switch {
+  background: #5cb85c;
+}
+.navbar-nav.navbar-nav-switch li a,
+.navbar-nav.navbar-nav-switch li a:active,
+.navbar-nav.navbar-nav-switch li a:visited {
+  color: white;
+  font-size: 18px;
+}
+.navbar-nav.navbar-nav-switch li a:hover {
+  background: #449d44;
+}
+.navbar-nav-next {
+  background: #337ab7;
+}
+.navbar-nav.navbar-nav-next li a,
+.navbar-nav.navbar-nav-next li a:active,
+.navbar-nav.navbar-nav-next li a:visited {
+  color: white;
+  font-size: 18px;
+}
+.navbar-nav.navbar-nav-next li a:hover {
+  background: #286090;
+}
+.navbar-nav li {
+  padding: 0;
+}
+.navbar-nav.col-sm-2,
+.navbar-nav.col-sm-8 {
+  padding-right: 0;
+} 
+.navbar-nav li a {
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
+body.has-navbar-fixed-top {
+  padding-top: 70px;
+  padding-bottom: 50px;
+  position: relative;
+}
+body, input, select, textarea, button {
+/*  font-family: "맑은 고딕";
+  -webkit-font-smoothing: antialiased;*/
+}
 textarea {
   overflow: auto;
   resize: none;
@@ -15,9 +69,6 @@ h4 {
 .portal {
   margin: 100px auto 0;
   width: 600px;
-}
-.container {
-  margin-bottom: 50px;
 }
 .portal .btn {
   margin-bottom: 20px;
