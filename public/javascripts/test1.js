@@ -1,5 +1,6 @@
 $(function() {
-  var TIMES = 4;
+  var duration = $('#duration').val();
+  var TIMES = parseInt(duration) / 2 - 1;
   var alarm1, alarm2;
   var t1 = TIMES, t2 = TIMES;
   var ac1 = $('#alarmClock1');
@@ -20,7 +21,6 @@ $(function() {
         break;
       case 1:
         startAC2();
-        btnSwitch.addClass('disabled');
         btnSwitch.attr('status', 2);
         break;
     } 
@@ -77,11 +77,12 @@ $(function() {
   }
 
   function startAC1() {
-    acBak1.slideUp();
+    $('.question1').show();
+    //acBak1.slideUp();
     acBtn1.remove();
-    acBak2.removeClass('pending');
+    //acBak2.removeClass('pending');
     alarm1 = window.setInterval(function () {
-      if (t1 > 0) {
+      if (t1 >= 0) {
         ac1.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t1));
         t1 -= 1;
         if (t1 < 180) {
@@ -89,7 +90,6 @@ $(function() {
         }
       } else {
         closeAC1();
-        btnSwitch.removeClass('disabled');
       }
     }, 1000);
   }
@@ -98,16 +98,19 @@ $(function() {
     window.clearInterval(alarm2);
     t2 = 0;
     form2.find('textarea').attr('readonly', 'readonly');
-    acBak2.slideDown();
-    $.post('/save1', form2.serializeArray()).done(function () {
-      location.replace('/thanks/' + num);
-    });
+    //acBak2.slideDown();
+    // $.post('/save1', form2.serializeArray()).done(function () {
+    //   location.replace('/thanks/' + num);
+    // });
+    btnNext.removeClass('disabled');
   }
 
   function startAC2() {
+    $('.question1').hide();
+    $('.question2').show();
     acBak2.slideUp();
     alarm2 = window.setInterval(function () {
-      if (t2 > 0) {
+      if (t2 >= 0) {
         ac2.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t2));
         t2 -= 1;
         if (t2 < 180) {

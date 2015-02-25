@@ -38,6 +38,15 @@
 .navbar-nav.navbar-nav-next li a:hover {
   background: #286090;
 }
+.navbar-nav li a.disabled,
+.navbar-nav li a.disabled:active,
+.navbar-nav li a.disabled:visited,
+.navbar-nav li a.disabled:hover {
+  color: #e7e7e7;
+  font-size: 18px;
+  background: gray;
+  cursor: not-allowed;
+}
 .navbar-nav li {
   padding: 0;
 }
@@ -99,6 +108,9 @@ h4 {
 }
 .backup {
   z-index: 9;
+}
+.backup, .question {
+  display: none;
 }
 table.stimuli {
   margin-top: 10px;

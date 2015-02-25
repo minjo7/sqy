@@ -14,18 +14,23 @@
       <legend>Settings</legend>
       <div class="form-group">
         <label for="numParticipants">Number of Participants</label>
-        <input id="numParticipants" class="form-control" name="numParticipants" value="<%=numParticipants ? numParticipants : 0%>" type="number" />
+        <input id="numParticipants" class="form-control" name="numParticipants" value="<%=numParticipants%>" type="number" />
       </div>
       <div class="form-group">
         <label for="numStimuli">Number of Stimuli</label>
-        <input id="numStimuli" class="form-control" name="numStimuli" type="number" value="<%=numStimuli ? numStimuli : 4%>" readonly="readonly" />
+        <input id="numStimuli" class="form-control" name="numStimuli" type="number" value="<%=numStimuli%>" readonly="readonly" />
+      </div>
+      <div class="form-group">
+        <label for="timeset">Duration (in seconds)</label>
+        <input id="duration" class="form-control" name="duration" value="<%=duration%>" type="number" />
       </div>
       <div class="form-group">
         <label for="timeset">Timeset (in seconds)</label>
-        <input id="timeset" class="form-control" name="timeset" value="<%=timeset ? timeset : 0%>" type="number" />
+        <input id="timeset" class="form-control" name="timeset" value="<%=timeset%>" type="number" />
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">Update</button>
+        <a class="btn btn-default" href="/">Home</a>
+        <button type="submit" class="btn btn-primary pull-right">Update</button>
       </div>
     </fieldset>
   </form>

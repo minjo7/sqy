@@ -3,13 +3,32 @@ var cmd      = require( '../cmd' );
 var mongoose = require( 'mongoose' );
 var HJX = mongoose.model( 'HJX' );
 var Settings = mongoose.model( 'Settings' );
+var Allocation = mongoose.model( 'Allocation' );
 
 var cur = utils.formatDate();
 var ran1 = ('10' + cur + '0000') - 0;
 var ran2 = ('20' + cur + '0000') - 0;
 
 exports.index1 = function ( req, res, next ){
-  res.render( 'index1' );
+  Settings.findOne()
+          .sort( '-updated_at' )
+          .exec(function (err, settings) {
+    if (err) return handleError(err);
+    else if (settings) {
+      res.render( 'index1', {
+        type: 1,
+        numParticipants: settings.numParticipants,
+        numStimuli: settings.numStimuli,
+        duration: settings.duration,
+        timeset: settings.timeset
+      });
+    } else {
+      res.writeHead(302, {
+          'Location': '/settings'
+      });
+      res.end();
+    }
+  });
 };
 
 exports.index2 = function ( req, res, next ) {
@@ -41,11 +60,39 @@ exports.list2 = function ( req, res, next ){
 };
 
 exports.test1 = function (req, res, next) {
-  ran1 += 1;
-  res.render( 'test1', {
-    user_id: ran1,
-    type: '1'
-  } );
+  // Disable caching for content files
+  res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.header("Pragma", "no-cache");
+  res.header("Expires", 0);
+  
+  Allocation.where({participantId: parseInt(req.query.participantId)})
+    .findOne(function (err, allocation) {
+      if (allocation) {
+        Settings.findOne()
+                .sort( '-updated_at' )
+                .exec(function (err, settings) {
+          if (err) return handleError(err);
+          else if (settings) {
+            res.render( 'test1', {
+              testset: allocation.testset,
+              participantId: req.query.participantId,
+              type: 1,
+              numParticipants: settings.numParticipants,
+              numStimuli: settings.numStimuli,
+              duration: settings.duration,
+              timeset: settings.timeset
+            });
+          } else {
+            res.writeHead(302, {
+                'Location': '/settings'
+            });
+            res.end();
+          }
+        });
+      } else {
+        res.send('{success: false}');
+      }
+    });
 };
 
 exports.test2 = function (req, res, next) {
@@ -57,22 +104,27 @@ exports.test2 = function (req, res, next) {
 };
 
 exports.settings = function (req, res, next) {
-  Settings.find()
+  Settings.findOne()
           .sort( '-updated_at' )
           .exec(function (err, settings) {
     if (err) return handleError(err);
-    else if (settings.length > 0) {
-      settings = settings[0];
+    else if (settings) {
       res.render( 'settings', {
         numParticipants: settings.numParticipants,
         numStimuli: settings.numStimuli,
+        duration: settings.duration,
         timeset: settings.timeset
       });
     } else {
-      res.render( 'settings' );
+      res.render( 'settings', {
+        numParticipants: 0,
+        numStimuli: 4,
+        duration: 0,
+        timeset: 0
+      });
     }
   });
-}
+};
 
 exports.update = function (req, res, next) {
   switch (req.body.cmd) {
@@ -82,7 +134,7 @@ exports.update = function (req, res, next) {
     default: 
       res.send('{success: false}');
   }
-}
+};
 
 exports.save1 = function (req, res, next) {
   HJX.find({user_id: req.body.user_id, question: req.body.question, type: req.body.type}, function (err, sqy) {
@@ -125,7 +177,8 @@ function toMi(se) {
     }
     return '0:' + se;
   }
-}
+};
+
 exports.save2 = function (req, res, next) {
   HJX.find({user_id: req.body.user_id, question: req.body.question, type: req.body.type}, function (err, sqy) {
 
