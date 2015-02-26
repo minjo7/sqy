@@ -32,7 +32,7 @@ exports.index = function ( req, res, next ){
 };
 
 exports.thanks = function ( req, res, next ){
-  res.render( 'thanks',  {num: req.params.num});
+  res.render( 'thanks',  {pid: req.params.pid});
 };
 
 exports.list1 = function ( req, res, next ){
@@ -101,8 +101,21 @@ exports.test2 = function (req, res, next) {
 };
 
 exports.next = function (req, res, next) {
+  var pid = req.params.pid;
+  var step = req.params.step;
+  switch(step) {
+    case '1':
+      redirect = '/test?pid='+pid+'&step=2';
+      break;
+    case '2':
+      redirect = '/thanks/'+pid;
+      break;
+    default:
+      res.send('{success: false}');
+      return;
+  }
   res.writeHead(302, {
-      'Location': '/test'
+    'Location': redirect
   });
   res.end();
 };
@@ -140,30 +153,23 @@ exports.update = function (req, res, next) {
   }
 };
 
-exports.save1 = function (req, res, next) {
-  HJX.find({user_id: req.body.user_id, question: req.body.question, type: req.body.type}, function (err, sqy) {
-    if (sqy.length > 0) { // update
-      sqy = sqy[0];
-      sqy.content = req.body.content;
-    } else {
-      sqy = new HJX({
-        user_id: req.body.user_id,
-        type: req.body.type,
-        question: req.body.question,
-        content: req.body.content,
-        contTime: '',
-        contTable: '',
-        editTimes: '',
-        updated_at : Date.now()
-      });
+exports.save = function (req, res, next) {
+  sqy = new HJX({
+    pid: req.body.pid,
+    type: req.body.type,
+    step: req.body.step,
+    question: req.body.question,
+    stimulus: req.body.stimulus,
+    answer1: req.body.guilty,
+    answer2: req.body.not_guilty,
+    updated_at : Date.now()
+  });
+  sqy.save( function ( err ){
+    if(!err){
+      res.send('{success: true}');
+    }else{
+      res.send('{success: false}');
     }
-    sqy.save( function ( err ){
-      if(!err){
-        res.send('{success: true}');
-      }else{
-        res.send('{success: false}');
-      }
-    });
   });
 };
 

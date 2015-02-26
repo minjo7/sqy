@@ -2,13 +2,13 @@ var mongoose = require( 'mongoose' );
 var Schema   = mongoose.Schema;
 
 var HJX = new Schema({
-  user_id: String,
-  type: String,
-  question: String,
-  content: String,
-  contTime: String,
-  contTable: String,
-  editTimes: String,
+  pid: Number,
+  type: Number,
+  step: Number,
+  question: Number,
+  stimulus: Number,
+  answer1: String,
+  answer2: String,
   updated_at: Date
 });
 

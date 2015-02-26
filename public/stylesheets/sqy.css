@@ -24,6 +24,7 @@
   font-size: 18px;
 }
 .navbar-nav.navbar-nav-switch li a:hover {
+  color: white;
   background: #449d44;
 }
 .navbar-nav-next {
@@ -36,6 +37,7 @@
   font-size: 18px;
 }
 .navbar-nav.navbar-nav-next li a:hover {
+  color: white;
   background: #286090;
 }
 .navbar-nav li a.disabled,
@@ -46,6 +48,9 @@
   font-size: 18px;
   background: gray;
   cursor: not-allowed;
+}
+.navbar-nav-next.disabled {
+  display: none;
 }
 .navbar-nav li {
   padding: 0;
