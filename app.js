@@ -29,15 +29,14 @@ app.use( bodyParser.json());
 app.use( bodyParser.urlencoded({ extended : true }));
 
 // Routes
-app.get('/', routes.index1);
-app.get('/tom', routes.index1);
-app.get('/jerry', routes.index2);
+app.get('/', routes.index);
+app.get('/welcome', routes.index);
 app.get('/thanks/:num', routes.thanks);
 app.get('/tom/list', routes.list1);
 app.get('/jerry/list', routes.list2);
-app.get('/tom/test', routes.test1);
-app.get('/jerry/test', routes.test2);
+app.get('/test', routes.test);
 app.get('/settings', routes.settings);
+app.get('/next', routes.next);
 app.post('/update', routes.update);
 app.post('/save1', routes.save1);
 app.post('/save2', routes.save2);

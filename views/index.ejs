@@ -13,7 +13,7 @@
   <div class="row">
     <div class="span2"></div>
     <div class="span8">
-      <form id="startForm" class="form-horizontal" method="get" action="/tom/test">
+      <form id="startForm" class="form-horizontal" method="get" action="/test">
         <blockquote>
           <p>안녕하세요.</p>
           <p>실험에 참가해 주셔서 매우 감사합니다.</p>
@@ -33,9 +33,9 @@
           <br/>
 
           <div class="form-group">
-            <label for="participantId">Participant ID:</label>
+            <label for="pid">Participant ID:</label>
             <div class="col-sm-4">
-              <input id="participantId" class="form-control" type="number" name="participantId"/>
+              <input id="pid" class="form-control" type="number" name="pid"/>
             </div>
           </div>
         </blockquote>
@@ -62,7 +62,7 @@ $(document).ready(function() {
       validating: 'glyphicon glyphicon-refresh'
     },
     fields: {
-      participantId: {
+      pid: {
         row: '.col-xs-4',
         validators: {
           notEmpty: {

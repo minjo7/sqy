@@ -21,7 +21,7 @@ var Settings = new Schema({
 });
 
 var Allocation = new Schema({
-  participantId: Number,
+  pid: Number,
   testset: [Number],
   updated_at: Date
 });

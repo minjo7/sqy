@@ -126,3 +126,6 @@ form.settings {
 form.settings legend {
   font-size: 36px;
 }
+label.percent {
+  display: inline-block;
+}

@@ -12,7 +12,7 @@ module.exports = {
       else
         seed = (seed + 1) % PRESET.length;
       var allocation = new Allocation({
-        participantId: i,
+        pid: i,
         testset: PRESET[seed],
         updated_at: Date.now()
       })

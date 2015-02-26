@@ -9,13 +9,13 @@ var cur = utils.formatDate();
 var ran1 = ('10' + cur + '0000') - 0;
 var ran2 = ('20' + cur + '0000') - 0;
 
-exports.index1 = function ( req, res, next ){
+exports.index = function ( req, res, next ){
   Settings.findOne()
           .sort( '-updated_at' )
           .exec(function (err, settings) {
     if (err) return handleError(err);
     else if (settings) {
-      res.render( 'index1', {
+      res.render( 'index', {
         type: 1,
         numParticipants: settings.numParticipants,
         numStimuli: settings.numStimuli,
@@ -29,10 +29,6 @@ exports.index1 = function ( req, res, next ){
       res.end();
     }
   });
-};
-
-exports.index2 = function ( req, res, next ) {
-  res.render( 'index2' );
 };
 
 exports.thanks = function ( req, res, next ){
@@ -59,13 +55,13 @@ exports.list2 = function ( req, res, next ){
   });
 };
 
-exports.test1 = function (req, res, next) {
+exports.test = function (req, res, next) {
   // Disable caching for content files
   res.header("Cache-Control", "no-cache, no-store, must-revalidate");
   res.header("Pragma", "no-cache");
   res.header("Expires", 0);
-  
-  Allocation.where({participantId: parseInt(req.query.participantId)})
+
+  Allocation.where({pid: parseInt(req.query.pid)})
     .findOne(function (err, allocation) {
       if (allocation) {
         Settings.findOne()
@@ -73,10 +69,11 @@ exports.test1 = function (req, res, next) {
                 .exec(function (err, settings) {
           if (err) return handleError(err);
           else if (settings) {
-            res.render( 'test1', {
+            res.render( 'test', {
               testset: allocation.testset,
-              participantId: req.query.participantId,
+              pid: req.query.pid,
               type: 1,
+              step: req.query.step?parseInt(req.query.step):1,
               numParticipants: settings.numParticipants,
               numStimuli: settings.numStimuli,
               duration: settings.duration,
@@ -101,6 +98,13 @@ exports.test2 = function (req, res, next) {
     user_id: ran2,
     type: '2'
   });
+};
+
+exports.next = function (req, res, next) {
+  res.writeHead(302, {
+      'Location': '/test'
+  });
+  res.end();
 };
 
 exports.settings = function (req, res, next) {

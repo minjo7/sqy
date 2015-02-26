@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>테스트 (<%=pid%>) <%=testset%></title>
+  <link href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/stylesheets/sqy.css" rel="stylesheet"/>
+</head>
+<body class="has-navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header col-sm-2">
+      <a class="navbar-brand" href="/">THEMIS</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-nav-switch col-sm-8">
+        <li class="col-sm-12"><a id="btnSwitch" status="0" class="text-center" href="#">풀이 시작</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-nav-next col-sm-2">
+        <li class="col-sm-12"><a id="btnNext" class="text-center disabled" href="./next?type=<%=type%>&pid=<%=pid%>&step=2">다음 문제</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+<input id="duration" type="hidden" name="duration" value="<%=duration%>"/>
+<div class="container">
+  <div class="alert alert-info">
+    <h4>주의사항：</h4>
+    <p></p>
+    <p>[문제 1]을 푸는 동안에는 [문제 2]을 보거나 풀 수 없습니다. &nbsp;&nbsp;[문제 1]의 제한 시간 <%=duration / 60 / 2%>분이 지나면 자동적으로 [문제 2]로 넘어갑니다.</p>
+    <p>각 문제에서 입력한 내용은 자동적으로 저장됩니다.</p>
+  </div>
+  <div class="test">
+    <div class="question question1">
+      <div class="backup" id="acBak1">
+        <input class="btn btn-success" id="acBtn1" type="button" value="문제1"/>
+      </div>
+      <div class="alarm alert alert-warning" id="alarmClock1"><span class="glyphicon glyphicon-time"></span> <%=duration / 60 / 2%>:00</div>
+      <%- partial('stimulus' + (step-1)*2 + testset[0] + '.html') %>
+      <form id="form1" class="form-horizontal">
+        <p>본 사건 1에 대하여</p>
+        <p>다음의 확률을 총 합이 100이 되도록 기입하시기 바랍니다.</p>
+        <br/>
+        <div class="form-group">
+          <label class="form-label col-sm-2 text-right">피고인은 유죄이다</label>
+          <div class="col-sm-3">
+            <input type="number" name="guilty"/>
+            <label class="percent">%</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label col-sm-2 text-right">피고인은 유죄가 아니다</label>
+          <div class="col-sm-3">
+            <input type="number" name="guilty"/>
+            <label class="percent">%</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label col-sm-2 text-right">총</label>
+          <div class="col-sm-3">
+            <input type="number" name="guilty"/>
+            <label class="percent">%</label>
+          </div>
+        </div>
+        <input type="hidden" name="step" value="<%=step%>"/>
+        <input type="hidden" name="question" value="1"/>
+        <input type="hidden" name="pid" value="<%=pid%>"/>
+        <input type="hidden" name="type" value="<%=type%>"/>
+      </form>
+    </div>
+    <div class="question question2">
+      <div class="backup pending" id="acBak2">
+        <input class="btn btn-success hide" id="acBtn2" type="button" value="문제2"/>
+      </div>
+      <div class="alarm alert alert-warning" id="alarmClock2"><span class="glyphicon glyphicon-time"></span> <%=duration / 60 / 2%>:00</div>
+      <%- partial('stimulus' + (step-1)*2 + testset[1] + '.html') %>
+      <form id="form2">
+        <p>본 사건 2에 대하여</p>
+        <p>다음의 확률을 총 합이 100이 되도록 기입하시기 바랍니다.</p>
+        <br/>
+        <div class="form-group">
+          <label class="form-label col-sm-2 text-right">피고인은 유죄이다</label>
+          <div class="col-sm-3">
+            <input type="number" name="guilty"/>
+            <label class="percent">%</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label col-sm-2 text-right">피고인은 유죄가 아니다</label>
+          <div class="col-sm-3">
+            <input type="number" name="guilty"/>
+            <label class="percent">%</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label col-sm-2 text-right">총</label>
+          <div class="col-sm-3">
+            <input type="number" name="guilty"/>
+            <label class="percent">%</label>
+          </div>
+        </div>
+        <input type="hidden" name="step" value="<%=step%>"/>
+        <input type="hidden" name="question" value="2"/>
+        <input type="hidden" name="pid" value="<%=pid%>"/>
+        <input type="hidden" name="type" value="<%=type%>"/>
+      </form>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/javascripts/test1.js"></script>
+</body>
+</html>
