@@ -72,7 +72,7 @@ exports.test = function (req, res, next) {
             res.render( 'test', {
               testset: allocation.testset,
               pid: req.query.pid,
-              type: 1,
+              type: allocation.type,
               step: req.query.step?parseInt(req.query.step):1,
               numParticipants: settings.numParticipants,
               numStimuli: settings.numStimuli,

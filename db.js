@@ -22,6 +22,7 @@ var Settings = new Schema({
 
 var Allocation = new Schema({
   pid: Number,
+  type: Number,
   testset: [Number],
   updated_at: Date
 });

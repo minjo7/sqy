@@ -5,14 +5,18 @@ var Allocation = mongoose.model( 'Allocation' );
 module.exports = {
   update_settings: function ( req, res, next ) {
     var PRESET = [[1,2,3,4],[4,1,2,3],[3,4,1,2],[2,3,4,1],[1,3,2,4],[1,4,2,3]];
+    var _type = 0;
     Allocation.remove().exec();
     for (i = 1; i <= req.body.numParticipants; i++) {
-      if (0 == (i-1) % PRESET.length)
+      if (0 == (i-1) % PRESET.length) {
         seed = Math.floor(Math.random() * PRESET.length);
-      else
+        _type = _type % 3 + 1;
+      } else {
         seed = (seed + 1) % PRESET.length;
+      }
       var allocation = new Allocation({
         pid: i,
+        type: _type,
         testset: PRESET[seed],
         updated_at: Date.now()
       })
