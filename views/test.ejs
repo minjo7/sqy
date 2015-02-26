@@ -36,7 +36,7 @@
         <input class="btn btn-success" id="acBtn1" type="button" value="문제1"/>
       </div>
       <div class="alarm alert alert-warning" id="alarmClock1"><span class="glyphicon glyphicon-time"></span> <%=duration / 60 / 2%>:00</div>
-      <%- partial('stimulus' + (step-1)*2 + testset[0] + '.html') %>
+      <%- partial('stimulus' + testset[(step-1)*2 + 0] + '.html') %>
       <form id="form1" class="form-horizontal">
         <p>본 사건 1에 대하여</p>
         <p>다음의 확률을 총 합이 100이 되도록 기입하시기 바랍니다.</p>
@@ -73,7 +73,7 @@
         <input class="btn btn-success hide" id="acBtn2" type="button" value="문제2"/>
       </div>
       <div class="alarm alert alert-warning" id="alarmClock2"><span class="glyphicon glyphicon-time"></span> <%=duration / 60 / 2%>:00</div>
-      <%- partial('stimulus' + (step-1)*2 + testset[1] + '.html') %>
+      <%- partial('stimulus' + testset[(step-1)*2 + 1] + '.html') %>
       <form id="form2">
         <p>본 사건 2에 대하여</p>
         <p>다음의 확률을 총 합이 100이 되도록 기입하시기 바랍니다.</p>
