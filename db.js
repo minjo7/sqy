@@ -17,6 +17,7 @@ var Settings = new Schema({
   numStimuli: Number,
   duration: Number,
   timeset: Number,
+  timeshift: Number,
   updated_at: Date
 });
 

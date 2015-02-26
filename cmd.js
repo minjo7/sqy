@@ -29,6 +29,7 @@ module.exports = {
       numStimuli: parseInt(req.body.numStimuli),
       duration: parseInt(req.body.duration),
       timeset: parseInt(req.body.timeset),
+      timeshift: parseInt(req.body.timeshift),
       updated_at : Date.now()
     });
     settings.save( function ( err ){

@@ -95,6 +95,7 @@ $(function() {
     t1 = 0;
     //acBak1.slideDown();
     saveForm(form1);
+    $('.question1').hide();
     startAC2();
   }
 
@@ -130,6 +131,7 @@ $(function() {
     //   location.replace('/thanks/' + num);
     // });
     saveForm(form2);
+    $('.question2').hide();
     btnNext.removeClass('disabled');
   }
 

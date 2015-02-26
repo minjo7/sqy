@@ -130,14 +130,16 @@ exports.settings = function (req, res, next) {
         numParticipants: settings.numParticipants,
         numStimuli: settings.numStimuli,
         duration: settings.duration,
-        timeset: settings.timeset
+        timeset: settings.timeset,
+        timeshift: settings.timeshift
       });
     } else {
       res.render( 'settings', {
         numParticipants: 0,
         numStimuli: 4,
         duration: 0,
-        timeset: 0
+        timeset: 0,
+        timeshift: 0,
       });
     }
   });
