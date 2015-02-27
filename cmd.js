@@ -52,6 +52,7 @@ module.exports = {
            updated_at: { $first: "$updated_at"}}}]).exec(function(err, hjxes){
       res.writeHead(200, {'Content-Type':'text/csv', 'pragma':'public'});
       fields = ['pid', 'type', 'step', 'question', 'stimulus', 'answer1', 'answer2', 'updated_at'];
+      res.write(fields.join(', ') + '\n');
       hjxes.forEach(function(hjx, i){
         var values = [];
         fields.forEach(function(field, j){
