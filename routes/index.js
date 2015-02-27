@@ -6,10 +6,6 @@ var HJX = mongoose.model( 'HJX' );
 var Settings = mongoose.model( 'Settings' );
 var Allocation = mongoose.model( 'Allocation' );
 
-var cur = utils.formatDate();
-var ran1 = ('10' + cur + '0000') - 0;
-var ran2 = ('20' + cur + '0000') - 0;
-
 exports.index = function ( req, res, next ){
   Settings.findOne()
           .sort( '-updated_at' )
@@ -34,26 +30,6 @@ exports.index = function ( req, res, next ){
 
 exports.thanks = function ( req, res, next ){
   res.render( 'thanks',  {pid: req.params.pid});
-};
-
-exports.list1 = function ( req, res, next ){
-  HJX.find({type:'1'}).sort( '-updated_at' ).exec( function ( err, list ){
-    if( err ) return next( err );
-    res.render( 'list', {
-      title : 'Test Result',
-      list : list
-    });
-  });
-};
-
-exports.list2 = function ( req, res, next ){
-  HJX.find({type:'2'}).sort( '-user_id' ).exec( function ( err, list ){
-    if( err ) return next( err );
-    res.render( 'list', {
-      title : 'Test Result',
-      list : list
-    });
-  });
 };
 
 exports.test = function (req, res, next) {
@@ -93,34 +69,6 @@ exports.test = function (req, res, next) {
     });
 };
 
-exports.test2 = function (req, res, next) {
-  ran2 += 2;
-  res.render( 'test2', {
-    user_id: ran2,
-    type: '2'
-  });
-};
-
-exports.next = function (req, res, next) {
-  var pid = req.params.pid;
-  var step = req.params.step;
-  switch(step) {
-    case '1':
-      redirect = '/test?pid='+pid+'&step=2';
-      break;
-    case '2':
-      redirect = '/thanks/'+pid;
-      break;
-    default:
-      res.send('{success: false}');
-      return;
-  }
-  res.writeHead(302, {
-    'Location': redirect
-  });
-  res.end();
-};
-
 exports.settings = function (req, res, next) {
   Settings.findOne()
           .sort( '-updated_at' )
@@ -147,6 +95,39 @@ exports.settings = function (req, res, next) {
         timeshift: 0,
       });
     }
+  });
+};
+
+exports.next = function (req, res, next) {
+  var pid = req.params.pid;
+  var step = req.params.step;
+  switch(step) {
+    case '1':
+      redirect = '/test?pid='+pid+'&step=2';
+      break;
+    case '2':
+      redirect = '/thanks/'+pid;
+      break;
+    default:
+      res.send('{success: false}');
+      return;
+  }
+  res.writeHead(302, {
+    'Location': redirect
+  });
+  res.end();
+};
+
+exports.answers = function (req, res, next) {
+  cmd.export_answers_csv(req, res, next);
+};
+
+exports.switches = function (req, res, next) {
+  HJX.find().sort('pid, -updated_at').exec(function(err, hjxes){
+    res.render('csv/switches', {
+      hjxes: hjxes,
+      moment: moment
+    });
   });
 };
 
@@ -177,60 +158,5 @@ exports.save = function (req, res, next) {
     }else{
       res.send('{success: false}');
     }
-  });
-};
-
-function toMi(se) {
-  if (se >= 60) {
-    var m = Math.floor(se / 60);
-    var s = se % 60;
-    if (s<10) {
-      s = '0' + s;
-    }
-    return m + ':' + s;
-  } else {
-    if (se < 10) {
-      se = '0' + se;
-    }
-    return '0:' + se;
-  }
-};
-
-exports.save2 = function (req, res, next) {
-  HJX.find({user_id: req.body.user_id, question: req.body.question, type: req.body.type}, function (err, sqy) {
-
-    var contTime = (req.body.contTime || '').split(',');
-    var contTable = [];
-    var editTimes = contTime.length;
-
-    contTime.forEach(function (time) {
-      contTable.push('open@'+toMi(time));
-    });
-
-    if (sqy.length > 0) { // update
-      sqy = sqy[0];
-      sqy.content = req.body.content;
-      sqy.contTime = contTime;
-      sqy.contTable = contTable.join(',');
-      sqy.editTimes = editTimes;
-    } else {
-      sqy = new HJX({
-        user_id: req.body.user_id,
-        type: req.body.type,
-        question: req.body.question,
-        content: req.body.content,
-        contTime: contTime,
-        contTable: contTable.join(','),
-        editTimes: editTimes,
-        updated_at : Date.now()
-      });
-    }
-    sqy.save( function ( err ){
-      if(!err){
-        res.send('{success:true}');
-      }else{
-        res.send('{success:false}');
-      }
-    });
   });
 };

@@ -1,5 +1,7 @@
-var mongoose = require( 'mongoose' );
-var Settings = mongoose.model( 'Settings' );
+var moment     = require('moment');
+var mongoose   = require( 'mongoose' );
+var HJX        = mongoose.model( 'HJX' );
+var Settings   = mongoose.model( 'Settings' );
 var Allocation = mongoose.model( 'Allocation' );
 
 module.exports = {
@@ -37,6 +39,25 @@ module.exports = {
         res.writeHead(302, {'Location': '/settings'});
         res.end();
       } else res.send( '{success: false}' );
+    });
+  },
+  export_answers_csv: function ( req, res, next ) {
+    HJX.find().sort('pid -updated_at').exec(function(err, hjxes){
+      res.writeHead(200, {'Content-Type':'text/csv', 'pragma':'public'});
+      fields = ['pid', 'type', 'step', 'question', 'stimulus', 'answer1', 'answer2', 'updated_at'];
+      res.write(fields.join(', ') + '\n');
+      hjxes.forEach(function(hjx, i){
+        var values = [];
+        fields.forEach(function(field, i){
+          var value = hjx[field];
+          if (value instanceof Date)
+            values.push(moment(value).format('YYYY-MM-DD hh:mm:ss'));
+          else
+            values.push(value);
+        });
+        res.write(values.join(', ') + '\n');
+      });
+      res.end()
     });
   }
 };

@@ -32,14 +32,13 @@ app.use( bodyParser.urlencoded({ extended : true }));
 app.get('/', routes.index);
 app.get('/welcome', routes.index);
 app.get('/thanks/:pid', routes.thanks);
-app.get('/tom/list', routes.list1);
-app.get('/jerry/list', routes.list2);
 app.get('/test', routes.test);
 app.get('/settings', routes.settings);
 app.get('/next/:pid/:step', routes.next);
+app.get('/export/answers', routes.answers);
+app.get('/export/switches', routes.switches);
 app.post('/update', routes.update);
 app.post('/save', routes.save);
-app.post('/save2', routes.save2);
 app.use(static( path.join( __dirname, 'public' )));
 
 // development only
