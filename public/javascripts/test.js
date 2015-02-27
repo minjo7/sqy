@@ -23,12 +23,20 @@ $(function() {
       return;
     switch (parseInt(btnSwitch.attr('status'))) {
       case 0:
+        if (2 == type && t2 < TIMELEFT - 1 && '100' != form2.find('input[name="total"]').val()) {
+          alert(TIMELEFT / 60 + ' 분을 초과하여 이 문제를 풀어야 전환할 수 있습니다.');
+          return;
+        }
         closeAC2();
         startAC1();
         btnSwitch.attr('status', 1);
         btnSwitch.html('문제 전환');
         break;
       case 1:
+        if (2 == type && t1 < TIMELEFT - 1 && '100' != form1.find('input[name="total"]').val()) {
+          alert(TIMELEFT / 60 + ' 분을 초과하여 이 문제를 풀어야 전환할 수 있습니다.');
+          return;
+        }
         closeAC1();
         startAC2();
         btnSwitch.attr('status', 0);
@@ -122,7 +130,7 @@ $(function() {
           }
           if ('100' == form1.find('input[name="total"]').val()) {
             btnSwitch.removeClass('disabled');
-          } else if (2 != type)
+          } else if (2 != type) {
             btnSwitch.addClass('disabled');
           }
           if ('100' == form1.find('input[name="total"]').val() &&
