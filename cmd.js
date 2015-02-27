@@ -42,14 +42,23 @@ module.exports = {
     });
   },
   export_answers_csv: function ( req, res, next ) {
-    HJX.find().sort('pid -updated_at').exec(function(err, hjxes){
+    HJX.aggregate([ 
+      { $sort: { pid: -1, stimulus: -1, updated_at: -1 }}, {$group: { _id: { pid: "$pid", stimulus: "$stimulus"}, 
+                 type: { $first: "$type" }, 
+                 step: { $first: "$step" }, 
+             question: { $first: "$question" }, 
+              answer1: { $first: "$answer1"},
+              answer2: { $first: "$answer2"},
+           updated_at: { $first: "$updated_at"}}}]).exec(function(err, hjxes){
       res.writeHead(200, {'Content-Type':'text/csv', 'pragma':'public'});
       fields = ['pid', 'type', 'step', 'question', 'stimulus', 'answer1', 'answer2', 'updated_at'];
-      res.write(fields.join(', ') + '\n');
       hjxes.forEach(function(hjx, i){
         var values = [];
-        fields.forEach(function(field, i){
-          var value = hjx[field];
+        fields.forEach(function(field, j){
+          if ('pid' == field || 'stimulus' == field)
+            var value = hjx['_id'][field];
+          else
+            var value = hjx[field];
           if (value instanceof Date)
             values.push(moment(value).format('YYYY-MM-DD hh:mm:ss'));
           else
@@ -57,7 +66,7 @@ module.exports = {
         });
         res.write(values.join(', ') + '\n');
       });
-      res.end()
+      res.end();
     });
   }
 };
