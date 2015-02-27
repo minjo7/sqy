@@ -3,9 +3,9 @@ $(function() {
   var duration = $('#duration').val();
   var timeset = $('#timeset').val();
   var TIMES = parseInt(duration) / 2 - 1;
-  var TIMELEFT = parseInt(timeset) / (2==type?1:2);
+  var TIMELEFT = parseInt(timeset) / 2;
   var alarm1, alarm2;
-  var t1 = TIMES, t2 = TIMES, t3 = TIMES * 2 + 1;
+  var t1 = TIMES, t2 = TIMES;
   var ac1 = $('#alarmClock1');
   var ac2 = $('#alarmClock2');
   var acBak1 = $('#acBak1');
@@ -14,7 +14,7 @@ $(function() {
   var acBtn2 = $('#acBtn2');
   var btnSwitch = $('#btnSwitch');
   var btnNext = $('.navbar-nav-next ');
-  var ask1 = false; var ask2 = false; var ask3 = false;
+  var ask1 = false; var ask2 = false;
   var form1 = $('#form1');
   var form2 = $('#form2');
 
@@ -108,25 +108,22 @@ $(function() {
     //acBak1.slideUp();
     //acBtn1.remove();
     //acBak2.removeClass('pending');
-    ac1.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(2!=type?t1+1:t3+1));
+    ac1.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t1+1));
     alarm1 = window.setInterval(function () {
-      if ((2 != type && t1 >= 0) || (2 == type && t3 >= 0)) {
-        ac1.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(2!=type?t1:t3));
-        if (2 != type) t1 -= 1;
-        else t3 -= 1;
-        if ((2 != type && t1 < TIMELEFT - 1) || (2 == type && t3 < TIMELEFT - 1)) {
+      if (t1 >= 0) {
+        ac1.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t1));
+        t1 -= 1;
+        if (t1 < TIMELEFT - 1) {
           ac1.removeClass('alert-warning');
           ac1.addClass('alert-danger');
-          if (2 != type ? !ask1 : !ask3) {
+          if (!ask1) {
             alert(TIMELEFT / 60 + ' 분 남았습니다!');
-            if (2 != type) ask1 = true;
-            else ask3 = true;
+            ask1 = true;
           }
           if ('100' == form1.find('input[name="total"]').val()) {
             btnSwitch.removeClass('disabled');
-          } else {
-            if (2 != type)
-              btnSwitch.addClass('disabled');
+          } else if (2 != type)
+            btnSwitch.addClass('disabled');
           }
           if ('100' == form1.find('input[name="total"]').val() &&
               2 == type && '100' == form2.find('input[name="total"]').val()) {
@@ -135,10 +132,10 @@ $(function() {
         }
       } else {
         closeAC1();
-        if ((2 != type && t2 > 0) || (2 == type && t3 > 0))
+        if (t2 > 0)
           startAC2();
-        if (t3 < 0 && 2 == type || 2 != type) {
-          btnSwitch.addClass('disabled');
+        btnSwitch.addClass('disabled');
+        if (t1 < 0 && t2 < 0) {
           btnNext.removeClass('disabled');
         }
       }
@@ -164,19 +161,17 @@ $(function() {
     $('.question1').hide();
     $('.question2').show();
     acBak2.slideUp();
-    ac2.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(2!=type?t2+1:t3+1));
+    ac2.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t2+1));
     alarm2 = window.setInterval(function () {
-      if ((2 != type && t2 >= 0) || (2 == type && t3 >= 0)) {
-        ac2.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(2!=type?t2:t3));
-        if (2 != type) t2 -= 1;
-        else t3 -= 1;
-        if ((2 != type && t2 < TIMELEFT - 1) || (2 == type && t3 < TIMELEFT - 1)) {
+      if (t2 >= 0) {
+        ac2.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t2));
+        t2 -= 1;
+        if (t2 < TIMELEFT - 1) {
           ac2.removeClass('alert-warning');
           ac2.addClass('alert-danger');
-          if (2 != type ? !ask2 : !ask3) {
+          if (!ask2) {
             alert(TIMELEFT / 60 + ' 분 남았습니다!');
-            if (2 != type) ask2 = true;
-            else ask3 = true;
+            ask2 = true;
           }
           if ('100' == form2.find('input[name="total"]').val() &&
               (2 != type || '100' == form1.find('input[name="total"]').val())) {
@@ -187,10 +182,10 @@ $(function() {
         }
       } else {
         closeAC2();
-        if (2 == type && t3 > 0)
+        if (2 == type && t1 > 0)
           startAC1();
-        if (t3 < 0 && 2 == type || 2 != type) {
-          btnSwitch.addClass('disabled');
+        btnSwitch.addClass('disabled');
+        if (t1 < 0 && t2 < 0) {
           btnNext.removeClass('disabled');
         }
       }
