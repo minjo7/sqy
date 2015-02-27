@@ -23,10 +23,11 @@ $(function() {
     switch (parseInt(btnSwitch.attr('status'))) {
       case 0:
         startAC1();
-        btnSwitch.addClass('disabled');
         btnSwitch.attr('status', 1);
+        btnSwitch.html('문제 전환');
         break;
       case 1:
+        closeAC1();
         startAC2();
         btnSwitch.attr('status', 2);
         break;
@@ -96,13 +97,13 @@ $(function() {
     //acBak1.slideDown();
     saveForm(form1);
     $('.question1').hide();
-    startAC2();
   }
 
   function startAC1() {
+    btnSwitch.addClass('disabled');
     $('.question1').show();
     //acBak1.slideUp();
-    acBtn1.remove();
+    //acBtn1.remove();
     //acBak2.removeClass('pending');
     alarm1 = window.setInterval(function () {
       if (t1 >= 0) {
@@ -115,9 +116,15 @@ $(function() {
             alert(TIMELEFT / 60 + ' 분 남았습니다!');
             ask1 = true;
           }
+          if ('100' == form1.find('input[name="total"]').val()) {
+            btnSwitch.removeClass('disabled');
+          } else {
+            btnSwitch.addClass('disabled');
+          }
         }
       } else {
         closeAC1();
+        startAC2();
       }
     }, 1000);
   }
@@ -137,6 +144,7 @@ $(function() {
 
   function startAC2() {
     $("html, body").animate({ scrollTop: 0 });
+    btnSwitch.addClass('disabled');
     $('.question1').hide();
     $('.question2').show();
     acBak2.slideUp();
@@ -150,6 +158,11 @@ $(function() {
           if (!ask2) {
             alert(TIMELEFT / 60 + ' 분 남았습니다!');
             ask2 = true;
+          }
+          if ('100' == form2.find('input[name="total"]').val()) {
+            btnNext.removeClass('disabled');
+          } else {
+            btnNext.addClass('disabled');
           }
         }
       } else {
