@@ -2,10 +2,10 @@ $(function() {
   var type = $('#type').val();
   var duration = $('#duration').val();
   var timeset = $('#timeset').val();
-  var TIMES = parseInt(duration) / 2;
+  var TIMES = parseInt(duration) / 2 - 1;
   var TIMELEFT = parseInt(timeset) / (2==type?1:2);
   var alarm1, alarm2;
-  var t1 = TIMES, t2 = TIMES, t3 = TIMES * 2;
+  var t1 = TIMES, t2 = TIMES, t3 = TIMES * 2 + 1;
   var ac1 = $('#alarmClock1');
   var ac2 = $('#alarmClock2');
   var acBak1 = $('#acBak1');
@@ -108,7 +108,7 @@ $(function() {
     //acBak1.slideUp();
     //acBtn1.remove();
     //acBak2.removeClass('pending');
-    ac1.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(2!=type?t1:t3));
+    ac1.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(2!=type?t1+1:t3+1));
     alarm1 = window.setInterval(function () {
       if ((2 != type && t1 >= 0) || (2 == type && t3 >= 0)) {
         ac1.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(2!=type?t1:t3));
@@ -164,7 +164,7 @@ $(function() {
     $('.question1').hide();
     $('.question2').show();
     acBak2.slideUp();
-    ac2.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(2!=type?t2:t3));
+    ac2.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(2!=type?t2+1:t3+1));
     alarm2 = window.setInterval(function () {
       if ((2 != type && t2 >= 0) || (2 == type && t3 >= 0)) {
         ac2.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(2!=type?t2:t3));
