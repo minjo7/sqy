@@ -8,36 +8,75 @@
 </head>
 <body>
 <div class="container">
+  <hr/>
+  <h2>Settings</h2>
   <form class="settings" method="post" action="/update">
     <input type="hidden" name="cmd" value="update_settings"/>
-    <fieldset>
-      <legend>Settings</legend>
-      <div class="form-group">
-        <label for="numParticipants">Number of Participants</label>
-        <input id="numParticipants" class="form-control" name="numParticipants" value="<%=numParticipants%>" type="number" />
-      </div>
-      <div class="form-group">
-        <label for="numStimuli">Number of Stimuli</label>
-        <input id="numStimuli" class="form-control" name="numStimuli" type="number" value="<%=numStimuli%>" readonly="readonly" />
-      </div>
-      <div class="form-group">
-        <label for="timeset">Duration (in seconds)</label>
-        <input id="duration" class="form-control" name="duration" value="<%=duration%>" type="number" />
-      </div>
-      <div class="form-group">
-        <label for="timeset">Time Set (in seconds)</label>
-        <input id="timeset" class="form-control" name="timeset" value="<%=timeset%>" type="number" />
-      </div>
-      <div class="form-group">
-        <label for="timeshift">Time Shift (in seconds)</label>
-        <input id="timeshift" class="form-control" name="timeshift" value="<%=timeshift%>" type="number" />
-      </div>
-      <div class="form-group">
-        <a class="btn btn-default" href="/">Home</a>
-        <button type="submit" class="btn btn-primary pull-right">Update</button>
-      </div>
-    </fieldset>
+    <div class="form-group">
+      <label for="numParticipants">Number of Participants</label>
+      <input id="numParticipants" class="form-control" name="numParticipants" value="<%=numParticipants%>" type="number" />
+    </div>
+    <div class="form-group">
+      <label for="numStimuli">Number of Stimuli</label>
+      <input id="numStimuli" class="form-control" name="numStimuli" type="number" value="<%=numStimuli%>" readonly="readonly" />
+    </div>
+    <div class="form-group">
+      <label for="timeset">Duration (in seconds)</label>
+      <input id="duration" class="form-control" name="duration" value="<%=duration%>" type="number" />
+    </div>
+    <div class="form-group">
+      <label for="timeset">Time Set (in seconds)</label>
+      <input id="timeset" class="form-control" name="timeset" value="<%=timeset%>" type="number" />
+    </div>
+    <div class="form-group hidden">
+      <label for="timeshift">Time Shift (in seconds)</label>
+      <input id="timeshift" class="form-control" name="timeshift" value="<%=timeshift%>" type="number" />
+    </div>
+    <div class="form-group">
+      <a class="btn btn-default" href="/">Home</a>
+      <button type="submit" class="btn btn-primary pull-right">Update</button>
+    </div>
   </form>
+  <hr/>
+  <h2>Export</h2>
+  <ul>
+    <li><a href="/export/answer/">All answers (CSV)</a></li>
+    <li><a href="/export/switch/">Type2 switches (CSV)</a></li>
+  </ul>
+  <hr/>
+  <h2>Allocation Table</h2>
+  <div class="allocations">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th rowspan="2">pid</th>
+          <th rowspan="2">type</th>
+          <th colspan="2">test set1</th>
+          <th colspan="2">test set2</th>
+          <th rowspan="2">updated_at</th>
+        </tr>
+        <tr>
+          <th>problem1</th>
+          <th>problem2</th>
+          <th>problem1</th>
+          <th>problem2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% allocations.forEach(function(alloc, i){ %>
+        <tr>
+          <td><%=alloc.pid%></td>
+          <td><%=alloc.type%></td>
+          <td><%=alloc.testset[0]%></td>
+          <td><%=alloc.testset[1]%></td>
+          <td><%=alloc.testset[2]%></td>
+          <td><%=alloc.testset[3]%></td>
+          <td><%=moment(alloc.updated_at).format('YYYY-MM-DD hh:mm:ss') %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
 </div>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>

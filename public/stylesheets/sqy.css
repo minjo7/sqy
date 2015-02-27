@@ -134,3 +134,7 @@ form.settings legend {
 label.percent {
   display: inline-block;
 }
+.admin {
+  color: white;
+  text-decoration: none;
+}

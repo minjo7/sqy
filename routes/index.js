@@ -1,3 +1,4 @@
+var moment   = require('moment');
 var utils    = require( '../utils' );
 var cmd      = require( '../cmd' );
 var mongoose = require( 'mongoose' );
@@ -126,12 +127,16 @@ exports.settings = function (req, res, next) {
           .exec(function (err, settings) {
     if (err) return handleError(err);
     else if (settings) {
-      res.render( 'settings', {
-        numParticipants: settings.numParticipants,
-        numStimuli: settings.numStimuli,
-        duration: settings.duration,
-        timeset: settings.timeset,
-        timeshift: settings.timeshift
+      Allocation.find().sort('pid').exec(function(err, allocations){
+        res.render( 'settings', {
+          numParticipants: settings.numParticipants,
+          numStimuli: settings.numStimuli,
+          duration: settings.duration,
+          timeset: settings.timeset,
+          timeshift: settings.timeshift,
+          allocations: allocations,
+          moment: moment
+        });
       });
     } else {
       res.render( 'settings', {
