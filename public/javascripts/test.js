@@ -2,7 +2,7 @@ $(function() {
   var type = $('#type').val();
   var duration = $('#duration').val();
   var timeset = $('#timeset').val();
-  var TIMES = parseInt(duration) / 2 - 1;
+  var TIMES = parseInt(duration) / 2;
   var TIMELEFT = parseInt(timeset) / 2;
   var alarm1, alarm2;
   var t1 = TIMES, t2 = TIMES;
@@ -23,7 +23,7 @@ $(function() {
       return;
     switch (parseInt(btnSwitch.attr('status'))) {
       case 0:
-        if (2 == type && t2 < TIMELEFT - 1 && '100' != form2.find('input[name="total"]').val()) {
+        if (2 == type && t2 <= TIMELEFT && '100' != form2.find('input[name="total"]').val()) {
           alert(TIMELEFT / 60 + ' 분을 초과하여 이 문제를 풀어야 전환할 수 있습니다.');
           return;
         }
@@ -33,7 +33,7 @@ $(function() {
         btnSwitch.html('문제 전환');
         break;
       case 1:
-        if (2 == type && t1 < TIMELEFT - 1 && '100' != form1.find('input[name="total"]').val()) {
+        if (2 == type && t1 <= TIMELEFT  && '100' != form1.find('input[name="total"]').val()) {
           alert(TIMELEFT / 60 + ' 분을 초과하여 이 문제를 풀어야 전환할 수 있습니다.');
           return;
         }
@@ -116,14 +116,21 @@ $(function() {
     //acBak1.slideUp();
     //acBtn1.remove();
     //acBak2.removeClass('pending');
-    ac1.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t1+1));
+    ac1.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t1));
     alarm1 = window.setInterval(function () {
-      if (t1 >= 0) {
-        ac1.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t1));
+      if (t1 > 0) {
         t1 -= 1;
-        if (t1 < TIMELEFT - 1) {
+        ac1.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t1));
+        if (3 == type && 0 == t1 % TIMELEFT && 0 != t1) {
+          closeAC1();
+          startAC2();
+        }
+        if (t1 <= TIMELEFT) {
           ac1.removeClass('alert-warning');
           ac1.addClass('alert-danger');
+          if (3 == type && 0 == t1 % TIMELEFT && 0 != t1) {
+            return;
+          }
           if (!ask1) {
             alert(TIMELEFT / 60 + ' 분 남았습니다!');
             ask1 = true;
@@ -143,7 +150,7 @@ $(function() {
         if (t2 > 0)
           startAC2();
         btnSwitch.addClass('disabled');
-        if (t1 < 0 && t2 < 0) {
+        if (t1 <= 0 && t2 <= 0) {
           btnNext.removeClass('disabled');
         }
       }
@@ -169,14 +176,21 @@ $(function() {
     $('.question1').hide();
     $('.question2').show();
     acBak2.slideUp();
-    ac2.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t2+1));
+    ac2.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t2));
     alarm2 = window.setInterval(function () {
-      if (t2 >= 0) {
-        ac2.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t2));
+      if (t2 > 0) {
         t2 -= 1;
-        if (t2 < TIMELEFT - 1) {
+        ac2.html('<span class="glyphicon glyphicon-time"></span> ' + toMi(t2));
+        if (3 == type && 0 == t2 % TIMELEFT && 0 != t2) {
+          closeAC2();
+          startAC1();
+        }
+        if (t2 <= TIMELEFT) {
           ac2.removeClass('alert-warning');
           ac2.addClass('alert-danger');
+          if (3 == type && 0 == t2 % TIMELEFT && 0 != t2) {
+            return;
+          }
           if (!ask2) {
             alert(TIMELEFT / 60 + ' 분 남았습니다!');
             ask2 = true;
@@ -193,7 +207,7 @@ $(function() {
         if (2 == type && t1 > 0)
           startAC1();
         btnSwitch.addClass('disabled');
-        if (t1 < 0 && t2 < 0) {
+        if (t1 <= 0 && t2 <= 0) {
           btnNext.removeClass('disabled');
         }
       }
