@@ -37,6 +37,7 @@ app.get('/settings', routes.settings);
 app.get('/next/:pid/:step', routes.next);
 app.get('/export/answers', routes.answers);
 app.get('/export/switches', routes.switches);
+app.get('/reset', routes.reset);
 app.post('/update', routes.update);
 app.post('/save', routes.save);
 app.use(static( path.join( __dirname, 'public' )));

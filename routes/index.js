@@ -123,12 +123,11 @@ exports.answers = function (req, res, next) {
 };
 
 exports.switches = function (req, res, next) {
-  HJX.find().sort('pid, -updated_at').exec(function(err, hjxes){
-    res.render('csv/switches', {
-      hjxes: hjxes,
-      moment: moment
-    });
-  });
+  cmd.export_switches_csv(req, res, next);
+};
+
+exports.reset = function (req, res, next) {
+  cmd.reset(req, res, next);
 };
 
 exports.update = function (req, res, next) {
