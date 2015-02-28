@@ -92,7 +92,6 @@ module.exports = {
       });
       fields = ['pid', 'type', 'step', 'mean', 'std', 'raw'];
       res.write(fields.join(', ') + '\n');
-      console.log(logs);
       Object.keys(logs).forEach(function(key, i){
         var pid = key.split('|')[0];
         var type = logs[key]['type'];
@@ -104,7 +103,6 @@ module.exports = {
         var values = [pid, type, step, mean, std, elapse];
         res.write(values.join(', ') + '\n');
       });
-      console.log(logs);
       res.end();
     });
   },

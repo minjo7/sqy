@@ -45,6 +45,7 @@
     <li><a href="/export/switches/">Type2 switches (CSV)</a></li>
   </ul>
   <hr/>
+  <% if (0 < allocations.length) { %>
   <h2>Allocation Table</h2>
   <div class="allocations">
     <table class="table table-striped">
@@ -79,6 +80,7 @@
     </table>
   </div>
 </div>
+<% } %>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>

@@ -93,6 +93,8 @@ exports.settings = function (req, res, next) {
         duration: 0,
         timeset: 0,
         timeshift: 0,
+        allocations: {},
+        moment: moment
       });
     }
   });
