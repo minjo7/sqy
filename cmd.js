@@ -3,6 +3,7 @@ var mongoose   = require( 'mongoose' );
 var HJX        = mongoose.model( 'HJX' );
 var Settings   = mongoose.model( 'Settings' );
 var Allocation = mongoose.model( 'Allocation' );
+var statistics = require('./statistics');
 
 module.exports = {
   update_settings: function ( req, res, next ) {
@@ -69,5 +70,54 @@ module.exports = {
       });
       res.end();
     });
+  },
+  export_switches_csv: function ( req, res, next ) {
+    //HJX.find({type: 2})
+    HJX.find() //test
+       .sort({ pid: 1, step: 1, updated_at: 1})
+       .exec(function(err, hjxes){
+      res.writeHead(200, {'Content-Type':'text/csv', 'pragma':'public'});
+      var logs = {};
+      hjxes.forEach(function(hjx, i){
+        var key = hjx.pid + '|' + hjx.step;
+        if (!logs[key]) logs[key] = {updated_at:[], elapse:[]};
+        var l = logs[key]['elapse'].length;
+        if (0 < l)
+          var elapse = hjx.updated_at.getTime() - logs[key]['updated_at'][l-1].getTime();
+        else
+          var elapse = 0;
+        logs[key]['type'] = hjx.type;
+        logs[key]['updated_at'].push(hjx.updated_at);
+        logs[key]['elapse'].push(Math.round(elapse / 1000));
+      });
+      fields = ['pid', 'type', 'step', 'mean', 'std', 'raw'];
+      res.write(fields.join(', ') + '\n');
+      console.log(logs);
+      Object.keys(logs).forEach(function(key, i){
+        var pid = key.split('|')[0];
+        var type = logs[key]['type'];
+        var step = key.split('|')[1];
+        var elapse = logs[key]['elapse'];
+        elapse.shift(); // remove start 0
+        var mean = statistics.mean(logs[key]['elapse']);
+        var std = statistics.std(logs[key]['elapse']);
+        var values = [pid, type, step, mean, std, elapse];
+        res.write(values.join(', ') + '\n');
+      });
+      console.log(logs);
+      res.end();
+    });
+  },
+  reset: function ( req, res, next ) {
+    HJX.remove().exec();
+    Settings.remove().exec();
+    Allocation.remove().exec();
+    res.writeHead(302, {'Location': '/settings'});
+    res.end();
   }
 };
+
+
+
+
+
