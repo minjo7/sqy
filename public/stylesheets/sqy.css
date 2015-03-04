@@ -125,6 +125,12 @@ table.stimuli td, table.stimuli th {
   border: 1px solid gray;
   padding: 5px;
 }
+table.stimuli .side {
+  width: 46%;
+}
+table.stimuli ul {
+  padding-left: 20px;
+}
 form.settings {
   margin-top: 10px;
 }
