@@ -144,3 +144,12 @@ label.percent {
   color: white;
   text-decoration: none;
 }
+.blinder { 
+  width: 100%;
+  height: 100%;
+  display: none;
+  position: absolute;
+  background: gray;
+  top: 0;
+  left: 0;
+}

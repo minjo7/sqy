@@ -27,7 +27,7 @@ $(function() {
       case 0:
         if (2 == type && t2 <= TIMELEFT) {
           if ('100' != total2) {
-            alert(TIMELEFT / 60 + ' 분을 초과하여 이 문제를 풀어야 전환할 수 있습니다.');
+            alert_with_blind(TIMELEFT / 60 + ' 분을 초과하여 이 문제를 풀어야 전환할 수 있습니다.');
             return;
           }
           if (!confirm('문제 풀이를 완료 하시겠습니까?'))
@@ -41,7 +41,7 @@ $(function() {
       case 1:
         if ((1 == type || 2 == type) && t1 <= TIMELEFT) {
           if ('100' != total1) {
-            alert(TIMELEFT / 60 + ' 분을 초과하여 이 문제를 풀어야 전환할 수 있습니다.');
+            alert_with_blind(TIMELEFT / 60 + ' 분을 초과하여 이 문제를 풀어야 전환할 수 있습니다.');
             return;
           }
           if (!confirm('문제 풀이를 완료 하시겠습니까?'))
@@ -149,7 +149,7 @@ $(function() {
             return;
           }
           if (!ask1) {
-            alert(TIMELEFT / 60 + ' 분 남았습니다!');
+            alert_with_blind(TIMELEFT / 60 + ' 분 남았습니다!');
             ask1 = true;
           }
           if ('100' == form1.find('input[name="total"]').val()) {
@@ -170,7 +170,7 @@ $(function() {
         if (t2 > 0)
           startAC2();
         btnSwitch.addClass('disabled');
-        if (t1 <= 0 && t2 <= 0) {
+        if (t1 <= 0 && t2 <= TIMELEFT) {
           btnNext.removeClass('disabled');
         }
       }
@@ -212,7 +212,7 @@ $(function() {
             return;
           }
           if (!ask2) {
-            alert(TIMELEFT / 60 + ' 분 남았습니다!');
+            alert_with_blind(TIMELEFT / 60 + ' 분 남았습니다!');
             ask2 = true;
           }
           if ('100' == form2.find('input[name="total"]').val() &&
@@ -230,10 +230,19 @@ $(function() {
         if (2 == type && t1 > 0)
           startAC1();
         btnSwitch.addClass('disabled');
-        if (t1 <= 0 && t2 <= 0) {
+        if (t1 <= TIMELEFT && t2 <= 0) {
           btnNext.removeClass('disabled');
         }
       }
     }, 1000);
   }
+
+  function alert_with_blind(message) {
+    $('.blinder').show();
+    window.setTimeout(function() {
+      alert(message);
+      $('.blinder').hide();
+    }, 10);  
+  }
+  
 });
