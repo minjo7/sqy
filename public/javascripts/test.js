@@ -19,29 +19,46 @@ $(function() {
   var form2 = $('#form2');
 
   btnSwitch.on('click', function (e) {
+    var total1 = form1.find('input[name="total"]').val();
+    var total2 = form2.find('input[name="total"]').val();
     if ($(e.target).hasClass('disabled'))
       return;
     switch (parseInt(btnSwitch.attr('status'))) {
       case 0:
-        if (2 == type && t2 <= TIMELEFT && '100' != form2.find('input[name="total"]').val()) {
-          alert(TIMELEFT / 60 + ' 분을 초과하여 이 문제를 풀어야 전환할 수 있습니다.');
-          return;
-        }
+        if (2 == type && t2 <= TIMELEFT) {
+          if ('100' != total2) {
+            alert(TIMELEFT / 60 + ' 분을 초과하여 이 문제를 풀어야 전환할 수 있습니다.');
+            return;
+          }
+          if (!confirm('문제 풀이를 완료 하시겠습니까?'))
+            return;
+        } 
         closeAC2();
         startAC1();
         btnSwitch.attr('status', 1);
         btnSwitch.html('문제 전환');
         break;
       case 1:
-        if (2 == type && t1 <= TIMELEFT  && '100' != form1.find('input[name="total"]').val()) {
-          alert(TIMELEFT / 60 + ' 분을 초과하여 이 문제를 풀어야 전환할 수 있습니다.');
-          return;
-        }
+        if ((1 == type || 2 == type) && t1 <= TIMELEFT) {
+          if ('100' != total1) {
+            alert(TIMELEFT / 60 + ' 분을 초과하여 이 문제를 풀어야 전환할 수 있습니다.');
+            return;
+          }
+          if (!confirm('문제 풀이를 완료 하시겠습니까?'))
+            return;
+        }  
         closeAC1();
         startAC2();
         btnSwitch.attr('status', 0);
         break;
     } 
+  });
+
+  btnNext.on('click', function (e) {
+    if (!confirm('문제 풀이를 완료 하시겠습니까?'))
+      return false;
+    else
+      return true;
   });
 
   $('.form-percent input[name="guilty"], .form-percent input[name="not_guilty"]').change(function(e){
@@ -141,9 +158,12 @@ $(function() {
             btnSwitch.addClass('disabled');
           }
           if ('100' == form1.find('input[name="total"]').val() &&
-              2 == type && '100' == form2.find('input[name="total"]').val()) {
+              2 == type && ('100' == form2.find('input[name="total"]').val() || t2 < TIMELEFT)) {
             btnNext.removeClass('disabled');
           }
+        }
+        if (t2 < TIMELEFT) {
+          btnSwitch.addClass('disabled');  
         }
       } else {
         closeAC1();
@@ -196,11 +216,14 @@ $(function() {
             ask2 = true;
           }
           if ('100' == form2.find('input[name="total"]').val() &&
-              (2 != type || '100' == form1.find('input[name="total"]').val())) {
+              (2 != type || '100' == form1.find('input[name="total"]').val() || t1 < TIMELEFT)) {
             btnNext.removeClass('disabled');
           } else {
             btnNext.addClass('disabled');
           }
+        }
+        if (t1 < TIMELEFT) {
+          btnSwitch.addClass('disabled');  
         }
       } else {
         closeAC2();
